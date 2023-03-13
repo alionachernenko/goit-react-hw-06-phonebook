@@ -16,7 +16,7 @@ export const ContactForm = () => {
     }
 
     dispatch(addContact(name.value, phone.value))
-  
+    e.target.reset()
   }
         return(
             <Form onSubmit={onContactFormSubmit}>
