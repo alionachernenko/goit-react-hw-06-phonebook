@@ -1,25 +1,19 @@
-import PropTypes from 'prop-types';
-
+import { getFilter } from 'redux/filterSlice';
 import { Contact } from 'components';
 import { List } from './ContactList.styled';
+import { useSelector } from 'react-redux';
+import { getContacts } from 'redux/contactsSlice';
 
 
-export const ContactList = ({contactsList, removeContact}) => {
+export const ContactList = () => {
+    const filter = useSelector(getFilter)
+    const contacts = useSelector(state => getContacts(state).filter(contact => contact.name.includes(filter)))
+
     return (
         <List>
-            {contactsList.map(({id, name, phone})=> (
-                <Contact key={id} id={id} name={name} phone={phone} onRemove={removeContact}/>
+            {contacts.map(({id, name, phone})=> (
+                <Contact key={id} id={id} name={name} phone={phone}/>
             ))}
         </List>
     )
-}
-
-
-ContactList.propTypes = {
-    contactsList: PropTypes.arrayOf(PropTypes.exact({
-        id: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        phone: PropTypes.string.isRequired
-    })),
-    removeContact: PropTypes.func
 }

@@ -1,16 +1,15 @@
 import { Input } from './Filter.styled';
-import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import { changeFilter } from 'redux/filterSlice';
 
-export const Filter = ({ value, onInputHandler }) => {
+export const Filter = () => {
+    const dispatch = useDispatch()
+
     return (
         <Input>
             <label htmlFor='filterInput'>Find contact by name</label>
-            <input id='filterInput' type='text' name='filter' value={value} onChange={onInputHandler}/>
+            <input id='filterInput' type='text' name='filter' onChange={(e) =>{ 
+                dispatch(changeFilter(e.target.value.trim()))}}/>
         </Input>
     )
-}
-
-Filter.propTypes = {
-    value: PropTypes.string.isRequired,
-    onInputHandler: PropTypes.func.isRequired
 }
